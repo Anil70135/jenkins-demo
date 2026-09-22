@@ -44,8 +44,11 @@ pipeline {
                 echo 'Installing dependencies in deploy folder...'
                 bat 'cd C:\\jenkins-deploy && npm install'
 
-                echo 'Starting new server in background...'
-                bat 'start "JenkinsApp" /D C:\\jenkins-deploy cmd /c npm start'
+                echo 'Starting new server (detached via Task Scheduler)...'
+                bat '''
+                    schtasks /Create /TN "JenkinsNodeApp" /TR "cmd /c cd /d C:\\jenkins-deploy && npm start" /SC ONCE /ST 00:00 /F
+                    schtasks /Run /TN "JenkinsNodeApp"
+                '''
 
                 echo 'Deployment complete! Visit http://localhost:9000'
             }
