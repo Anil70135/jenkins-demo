@@ -74,11 +74,11 @@ app.get('/', (req, res) => {
       <div class="card">
         <div class="badge">● BUILD PASSING</div>
         <h1>🎯 Jenkins CI/CD Pipeline</h1>
-        <p>Deployed automatically from GitHub</p>
+        <p>Deployed automatically from GitHub--Done by Anil Manda</p>
         <p style="font-size:0.9em; margin-top:15px;">Last deployed: ${new Date().toLocaleString()}</p>
         <div class="stats">
           <div class="stat">
-            <div class="stat-value">v2</div>
+            <div class="stat-value">v3</div>
             <div class="stat-label">Version</div>
           </div>
           <div class="stat">
