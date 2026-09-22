@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Jenkins Deployed App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-align: center;
+            padding-top: 100px;
+        }
+        h1 {
+            font-size: 3em;
+        }
+        p {
+            font-size: 1.3em;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 Hello from Jenkins CI/CD!</h1>
+    <p>This page was deployed automatically by my Jenkins pipeline.</p>
+    <p>Build time: <span id="time"></span></p>
+    <script>
+        document.getElementById("time").innerText = new Date().toLocaleString();
+    </script>
+</body>
+</html>
