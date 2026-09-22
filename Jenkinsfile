@@ -28,17 +28,33 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Deploying application...'
+                echo 'Stopping old server (if running)...'
+                bat '''
+                    for /f "tokens=5" %%p in ('netstat -aon ^| findstr :9000') do (
+                        taskkill /F /PID %%p 2>nul
+                    )
+                    exit 0
+                '''
+
+                echo 'Copying new files...'
+                bat 'if not exist C:\\jenkins-deploy mkdir C:\\jenkins-deploy'
                 bat 'xcopy /Y app.js C:\\jenkins-deploy\\'
                 bat 'xcopy /Y package.json C:\\jenkins-deploy\\'
-                echo 'Deployment complete! Run manually: cd C:\\jenkins-deploy && npm start'
+
+                echo 'Installing dependencies in deploy folder...'
+                bat 'cd C:\\jenkins-deploy && npm install'
+
+                echo 'Starting new server in background...'
+                bat 'start "JenkinsApp" /D C:\\jenkins-deploy cmd /c npm start'
+
+                echo 'Deployment complete! Visit http://localhost:9000'
             }
         }
     }
 
     post {
         success {
-            echo '✅ Pipeline completed successfully!'
+            echo '✅ Pipeline completed successfully! App is live at http://localhost:9000'
         }
         failure {
             echo '❌ Pipeline failed. Check console output above.'
